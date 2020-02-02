@@ -62,6 +62,7 @@ from bika.lims.utils import to_utf8 as _c
 # Anywhere that there just isn't space for unpredictably long names,
 # this value will be used instead.  It's set on the AnalysisService,
 # but accessed on all analysis objects.
+#Jeff Bullard
 ShortTitle = StringField(
     'ShortTitle',
     schemata="Description",
@@ -105,10 +106,21 @@ Unit = StringField(
     'Unit',
     schemata="Description",
     widget=StringWidget(
-        label=_("Unit"),
+        label=_("Water Unit"),
         description=_(
             "The measurement units for this analysis service' results, e.g. "
             "mg/l, ppm, dB, mV, etc."),
+    )
+)
+
+SoilUnit = StringField(
+    'SoilUnit',
+    schemata="Description",
+    widget=StringWidget(
+        label=_("Soil Unit"),
+        description=_(
+            "The measurement units for this analysis service' results, e.g. "
+            "mg/kg, ppm, dB, mV, etc."),
     )
 )
 
@@ -147,7 +159,22 @@ LowerDetectionLimit = FixedPointField(
     default='0.0',
     precision=7,
     widget=DecimalWidget(
-        label=_("Lower Detection Limit (LDL)"),
+        label=_("Water Lower Detection Limit (LDL)"),
+        description=_(
+            "The Lower Detection Limit is the lowest value to which the "
+            "measured parameter can be measured using the specified testing "
+            "methodology. Results entered which are less than this value will "
+            "be reported as < LDL")
+    )
+)
+
+LowerDetectionLimitSoil = FixedPointField(
+    'LowerDetectionLimitSoil',
+    schemata="Analysis",
+    default='0.0',
+    precision=7,
+    widget=DecimalWidget(
+        label=_("Soil Lower Detection Limit (LDL)"),
         description=_(
             "The Lower Detection Limit is the lowest value to which the "
             "measured parameter can be measured using the specified testing "
@@ -165,7 +192,22 @@ UpperDetectionLimit = FixedPointField(
     default='1000000000.0',
     precision=7,
     widget=DecimalWidget(
-        label=_("Upper Detection Limit (UDL)"),
+        label=_("Water Upper Detection Limit (UDL)"),
+        description=_(
+            "The Upper Detection Limit is the highest value to which the "
+            "measured parameter can be measured using the specified testing "
+            "methodology. Results entered which are greater than this value "
+            "will be reported as > UDL")
+    )
+)
+
+UpperDetectionLimitSoil = FixedPointField(
+    'UpperDetectionLimitSoil',
+    schemata="Analysis",
+    default='1000000000.0',
+    precision=7,
+    widget=DecimalWidget(
+        label=_("Soil Upper Detection Limit (UDL)"),
         description=_(
             "The Upper Detection Limit is the highest value to which the "
             "measured parameter can be measured using the specified testing "
@@ -708,10 +750,13 @@ schema = BikaSchema.copy() + Schema((
     ProtocolID,
     ScientificName,
     Unit,
+    SoilUnit,
     Precision,
     ExponentialFormatPrecision,
     LowerDetectionLimit,
     UpperDetectionLimit,
+    LowerDetectionLimitSoil,
+    UpperDetectionLimitSoil,
     DetectionLimitSelector,
     AllowManualDetectionLimit,
     AttachmentOption,
