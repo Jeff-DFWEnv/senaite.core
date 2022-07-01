@@ -60,7 +60,7 @@ setup(
         'collective.monkeypatcher',
         'collective.js.jqueryui',
         'plone.app.z3cform',
-        'openpyxl==1.5.8',
+        'openpyxl==2.4.2',
         'plone.app.iterate',
         'magnitude',
         'jarn.jsi18n',
